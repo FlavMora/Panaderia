@@ -3,8 +3,7 @@ CREATE USER 'panadero'@'%' IDENTIFIED BY 'panadero_password';
 CREATE DATABASE panaderia CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 GRANT ALL PRIVILEGES ON panaderia.* TO 'panadero'@'%';
 --------------
-
-
+use panaderia;
 -- Postres tabla
 CREATE TABLE postres (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -30,6 +29,8 @@ INSERT INTO postres (nombre, descripcion, imagen, calificacion, precio) VALUES
 ('Mousse de Maracuyá', 'Postre ligero y refrescante de maracuyá.', 'https://assets.elgourmet.com/wp-content/uploads/2023/03/0ab8d31e603028fcaa9550031b7d35dd_3_3_photo.png', 4.6, 4500.00),
 ('Pan de Yuca', 'Panecillos pequeños de harina de yuca y queso.', 'https://www.recetavenezolana.com/wp-content/uploads/2019/10/RFB-1610-2-pandeyuca.jpg', 4.2, 1500.00);
 
+use panaderia;
+-- Pasteles tabla
 CREATE TABLE pasteles (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(255) NOT NULL,
@@ -38,3 +39,10 @@ CREATE TABLE pasteles (
     calificacion DECIMAL(3, 2),
     precio DECIMAL(10, 2)
 );
+--- Pasteles datos
+INSERT INTO pasteles (nombre, descripcion, imagen, calificacion, precio) VALUES
+('Pastel de Chocolate', 'Delicioso pastel de chocolate con cobertura de ganache.', 'https://www.recetasderechupete.com/wp-content/uploads/2020/03/Pastel-de-chocolate.jpg', 4.8, 15.99),
+('Pastel de Fresa', 'Esponjoso pastel con fresas frescas y crema chantilly.', 'https://www.hogarmania.com/archivos/201207/6170-2-pastel-de-fresas-xl-668x400x80xX.jpg', 4.6, 13.50),
+('Pastel de Zanahoria', 'Pastel húmedo con zanahoria y nueces, cubierto con crema de queso.', 'https://www.lavanguardia.com/files/og_thumbnail/uploads/2021/12/13/61b7f5e584ba8.jpeg', 4.7, 14.75),
+('Cheesecake de Frutos Rojos', 'Tarta de queso con base de galleta y frutos rojos.', 'https://www.paulinacocina.net/wp-content/uploads/2022/06/Cheesecake-frutos-rojos-600x450.jpg', 4.9, 16.25),
+('Pastel Red Velvet', 'Pastel rojo aterciopelado con crema de queso.', 'https://www.recetasderechupete.com/wp-content/uploads/2020/02/Red-Velvet.jpg', 4.5, 14.99);
