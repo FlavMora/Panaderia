@@ -1,6 +1,6 @@
 package com.Panaderia.controller;
 
-import com.Panaderia.domain.Postre;
+import com.Panaderia.domain.Pastel;
 import com.Panaderia.service.PastelService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
