@@ -34,7 +34,7 @@ public class ReposteriaServiceImpl implements ReposteriaService {
 
   @Override
   public void deleteById(Integer id) {
-    ReposteriaRepository.deleteById(id);
+    reposteriaRepository.deleteById(id);
   }
 }
 
