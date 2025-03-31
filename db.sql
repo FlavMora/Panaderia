@@ -50,7 +50,7 @@ INSERT INTO pasteles (nombre, descripcion, imagen, calificacion, precio) VALUES
 
 use panaderia;
 -- Reposteria tabla
-CREATE TABLE reposteria (
+CREATE TABLE reposterias (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(255) NOT NULL,
     descripcion TEXT,
@@ -59,7 +59,7 @@ CREATE TABLE reposteria (
     precio DECIMAL(10, 2)
 );
 -- Datos Reposteria
-INSERT INTO reposteria (nombre, descripcion, imagen, calificacion, precio) VALUES
+INSERT INTO reposterias (nombre, descripcion, imagen, calificacion, precio) VALUES
 ('Tarta de Manzana', 'Clásica tarta de manzana con canela y crujiente de hojaldre.', 'https://www.hogarmania.com/archivos/201910/tarta-manzana-casera-xl-668x400x80xX.jpg', 4.7, 12.50),
 ('Croissants Artesanales', 'Cruasanes recién horneados con mantequilla pura.', 'https://www.recetasderechupete.com/wp-content/uploads/2018/05/Croissants-caseros-768x527.jpg', 4.6, 2.50),
 ('Profiteroles', 'Bolitas de masa choux rellenas de crema y bañadas en chocolate.', 'https://www.divinacocina.es/wp-content/uploads/profiteroles-chocolate.jpg', 4.8, 8.75),
