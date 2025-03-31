@@ -13,9 +13,8 @@ import java.util.Optional;
 @RequestMapping("/pasteles")
 public class PastelController {
  
-    
-  @Autowired
-  private PastelService pastelService;
+  
+  private final PastelService pastelService;
 
   public PastelController(PastelService pastelService) {
     this.pastelService = pastelService;
