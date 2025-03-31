@@ -41,7 +41,7 @@ public class ReposteriaController {
 
   @PostMapping("/guardar")
   public String saveReposteria(@ModelAttribute Reposteria reposteria) {
-    postreService.save(reposteria);
+   reposteriaService.save(reposteria);
     return "redirect:/postres/listado";
   }
 
