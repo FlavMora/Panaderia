@@ -1,7 +1,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
 <head th:replace="~{layout/plantilla :: head}">
-  <title>Listado de Postres</title>
+  <title>Listado de Reposterias</title>
 </head>
 
 <body>
@@ -11,7 +11,7 @@
   
 
   <a th:href="@{/postres/nuevo}" class="btn btn-nuevo mb-4">
-    <i class="fas fa-plus-circle"></i> Nuevo Postre
+    <i class="fas fa-plus-circle"></i> Nuevo Reposteria
   </a>
 
   <div class="table-responsive">
@@ -29,12 +29,12 @@
       <tbody>
         <tr th:each="postre : ${postres}" class="product-card">
           <td><img class="product-image" th:src="@{${postre.imagen}}" alt="imagen" height="100" width="100"/></td>
-          <td>[[${postre.nombre}]]</td>
-          <td>[[${postre.descripcion}]]</td>
-          <td>$[[${#numbers.formatDecimal(postre.precio, 1, 2)}]]</td>
+          <td>[[${reposteria.nombre}]]</td>
+          <td>[[${reposteria.descripcion}]]</td>
+          <td>$[[${#numbers.formatDecimal(reposteria.precio, 1, 2)}]]</td>
           <td>
             <span class="badge badge-calificacion">
-              [[${postre.calificacion}]]/5
+              [[${reposteria.calificacion}]]/5
             </span>
           </td>
           <td>
@@ -59,7 +59,7 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
         <div class="modal-body">
-          ¿Estás seguro de eliminar este postre?
+          ¿Estás seguro de eliminar esta reposteria?
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
@@ -72,8 +72,8 @@
   <script>
     $('#deleteModal').on('show.bs.modal', function (event) {
       let button = $(event.relatedTarget);
-      let postreId = button.data('id');
-      $('#confirmDelete').attr('href', `/postres/eliminar/${postreId}`);
+      let reposteriaId = button.data('id');
+      $('#confirmDelete').attr('href', `/reposterias/eliminar/${reposteriaId}`);
     });
   </script>
 
