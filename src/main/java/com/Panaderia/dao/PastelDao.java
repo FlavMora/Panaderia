@@ -5,10 +5,10 @@
 
 package com.Panaderia.dao;
 
-/**
- *
- * @author franm
- */
-public class PastelDao {
+import com.Panaderia.domain.Pastel;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
+@Repository
+public interface PastelDao extends JpaRepository<Pastel, Integer> {
 }

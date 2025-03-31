@@ -29,4 +29,12 @@ INSERT INTO postres (nombre, descripcion, imagen, calificacion, precio) VALUES
 ('Cajetas de Coco', 'Dulces de coco rallado y leche.', 'https://numar.net/wp-content/uploads/2018/09/miercolesweb_45.png', 4.1, 2000.00),
 ('Mousse de Maracuyá', 'Postre ligero y refrescante de maracuyá.', 'https://assets.elgourmet.com/wp-content/uploads/2023/03/0ab8d31e603028fcaa9550031b7d35dd_3_3_photo.png', 4.6, 4500.00),
 ('Pan de Yuca', 'Panecillos pequeños de harina de yuca y queso.', 'https://www.recetavenezolana.com/wp-content/uploads/2019/10/RFB-1610-2-pandeyuca.jpg', 4.2, 1500.00);
---------------
+
+CREATE TABLE pasteles (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(255) NOT NULL,
+    descripcion TEXT,
+    imagen VARCHAR(255),
+    calificacion DECIMAL(3, 2),
+    precio DECIMAL(10, 2)
+);

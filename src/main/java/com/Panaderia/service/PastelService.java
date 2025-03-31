@@ -5,10 +5,16 @@
 
 package com.Panaderia.service;
 
-/**
- *
- * @author franm
- */
-public class PastelService {
+import com.Panaderia.domain.Pastel;
+import java.util.List;
+import java.util.Optional;
 
+public interface PastelService {
+ List<Pastel> findAll();
+
+ Optional<Pastel> findById(Integer id);
+
+ Pastel save(Pastel pastel);
+
+  void deleteById(Integer id);
 }

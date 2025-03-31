@@ -1,0 +1,83 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{layout/plantilla :: head}">
+  <title>Listado de Pasteles</title>
+</head>
+
+<body>
+  <header>
+    <nav th:replace="~{layout/plantilla :: navbar}"></nav>
+  </header>
+  
+
+  <a th:href="@{/pasteles/nuevo}" class="btn btn-nuevo mb-4">
+    <i class="fas fa-plus-circle"></i> Nuevo Postre
+  </a>
+
+  <div class="table-responsive">
+    <table class="table table-hover">
+      <thead class="thead-light">
+        <tr>
+          <th>Imagen</th>
+          <th>Nombre</th>
+          <th>Descripción</th>
+          <th>Precio</th>
+          <th>Calificación</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="postre : ${postres}" class="product-card">
+          <td><img class="product-image" th:src="@{${pastel.imagen}}" alt="imagen" height="100" width="100"/></td>
+          <td>[[${postre.nombre}]]</td>
+          <td>[[${postre.descripcion}]]</td>
+          <td>$[[${#numbers.formatDecimal(pastel.precio, 1, 2)}]]</td>
+          <td>
+            <span class="badge badge-calificacion">
+              [[${pastel.calificacion}]]/5
+            </span>
+          </td>
+          <td>
+            <a th:href="@{/postres/modifica/{id}(id=${postre.id})}" class="btn btn-editar btn-accion me-2">
+              <i class="fas fa-edit"></i>
+            </a>
+            <button class="btn btn-eliminar btn-accion" data-bs-toggle="modal" data-bs-target="#deleteModal"
+              th:attr="data-id=${postre.id}">
+              <i class="fas fa-trash-alt"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="modal fade" id="deleteModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Confirmar Eliminación</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          ¿Estás seguro de eliminar este postre?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <a id="confirmDelete" class="btn btn-eliminar">Eliminar</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    $('#deleteModal').on('show.bs.modal', function (event) {
+      let button = $(event.relatedTarget);
+      let postreId = button.data('id');
+      $('#confirmDelete').attr('href', `/postres/eliminar/${postreId}`);
+    });
+  </script>
+
+  <footer th:replace="~{layout/plantilla :: footer}"></footer>
+</body>
+
+</html>
