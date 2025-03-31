@@ -27,7 +27,7 @@ public class ReposteriaController {
   }
 
   @GetMapping("/modifica/{id}")
-  public String updatePostre(@PathVariable Integer id, Model model) {
+  public String updateReposteria(@PathVariable Integer id, Model model) {
     Optional<Reposteria> reposteria = reposteriaService.findById(id);
     reposteria.ifPresent(p -> model.addAttribute("reposteria", p));
     return "reposterias/modifica";
