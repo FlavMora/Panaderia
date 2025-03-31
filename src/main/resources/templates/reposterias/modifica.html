@@ -1,0 +1,52 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{layout/plantilla :: head}">
+  <title>Nuevo Postre</title>
+</head>
+
+<body>
+  <nav th:replace="~{layout/plantilla :: navbar}"></nav>
+
+  <div class="card shadow-sm">
+    <div class="card-header" style="background-color: var(--warm-beige);">
+      <h4 class="mb-0"><i class="fas fa-edit"></i> Editar Postre</h4>
+    </div>
+    <div class="card-body">
+      <form th:action="@{/postres/guardar}" th:object="${postre}" method="POST" enctype="multipart/form-data"
+        class="needs-validation">
+        <input type="hidden" name="id" th:field="*{id}"/>
+        <div class="mb-3">
+          <label class="form-label">Nombre</label>
+          <input type="text" class="form-control" name="nombre" th:value="${postre.nombre}" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Descripción</label>
+          <textarea class="form-control" name="descripcion" rows="3" th:text="${postre.descripcion}"></textarea>
+        </div>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Precio</label>
+            <input type="number" class="form-control" name="precio" step="0.01" th:value="${postre.precio}" required>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Calificación (1-5)</label>
+            <input type="number" class="form-control" name="calificacion" min="1" max="5" step="0.1"
+              th:value="${postre.calificacion}" required>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">URL de la Imagen</label>
+          <input type="url" class="form-control" name="imagen" th:value="${postre.imagen}">
+        </div>
+        <button type="submit" class="btn btn-editar">
+          <i class="fas fa-save"></i> Actualizar
+        </button>
+        <a th:href="@{/postres/listado}" class="btn btn-cancelar">Cancelar</a>
+      </form>
+    </div>
+  </div>
+
+  <footer th:replace="~{layout/plantilla :: footer}"></footer>
+</body>
+
+</html>
