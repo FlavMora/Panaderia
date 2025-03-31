@@ -35,7 +35,7 @@ public class ReposteriaController {
 
   @GetMapping("/nuevo")
   public String createReposteriaForm(Model model) {
-    model.addAttribute("reposteria", new Postre());
+    model.addAttribute("reposteria", new Reposteria());
     return "reposterias/nuevo";
   }
 
