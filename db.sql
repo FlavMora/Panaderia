@@ -39,10 +39,39 @@ CREATE TABLE pasteles (
     calificacion DECIMAL(3, 2),
     precio DECIMAL(10, 2)
 );
---- Pasteles datos
+-- Pasteles datos
 INSERT INTO pasteles (nombre, descripcion, imagen, calificacion, precio) VALUES
 ('Pastel de Chocolate', 'Delicioso pastel de chocolate con cobertura de ganache.', 'https://www.recetasderechupete.com/wp-content/uploads/2020/03/Pastel-de-chocolate.jpg', 4.8, 15.99),
 ('Pastel de Fresa', 'Esponjoso pastel con fresas frescas y crema chantilly.', 'https://www.hogarmania.com/archivos/201207/6170-2-pastel-de-fresas-xl-668x400x80xX.jpg', 4.6, 13.50),
 ('Pastel de Zanahoria', 'Pastel húmedo con zanahoria y nueces, cubierto con crema de queso.', 'https://www.lavanguardia.com/files/og_thumbnail/uploads/2021/12/13/61b7f5e584ba8.jpeg', 4.7, 14.75),
 ('Cheesecake de Frutos Rojos', 'Tarta de queso con base de galleta y frutos rojos.', 'https://www.paulinacocina.net/wp-content/uploads/2022/06/Cheesecake-frutos-rojos-600x450.jpg', 4.9, 16.25),
 ('Pastel Red Velvet', 'Pastel rojo aterciopelado con crema de queso.', 'https://www.recetasderechupete.com/wp-content/uploads/2020/02/Red-Velvet.jpg', 4.5, 14.99);
+
+
+use panaderia;
+-- Reposteria tabla
+CREATE TABLE reposteria (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(255) NOT NULL,
+    descripcion TEXT,
+    imagen VARCHAR(255),
+    calificacion DECIMAL(3, 2),
+    precio DECIMAL(10, 2)
+);
+-- Datos Reposteria
+INSERT INTO reposteria (nombre, descripcion, imagen, calificacion, precio) VALUES
+('Tarta de Manzana', 'Clásica tarta de manzana con canela y crujiente de hojaldre.', 'https://www.hogarmania.com/archivos/201910/tarta-manzana-casera-xl-668x400x80xX.jpg', 4.7, 12.50),
+('Croissants Artesanales', 'Cruasanes recién horneados con mantequilla pura.', 'https://www.recetasderechupete.com/wp-content/uploads/2018/05/Croissants-caseros-768x527.jpg', 4.6, 2.50),
+('Profiteroles', 'Bolitas de masa choux rellenas de crema y bañadas en chocolate.', 'https://www.divinacocina.es/wp-content/uploads/profiteroles-chocolate.jpg', 4.8, 8.75),
+('Macarons Franceses', 'Delicados macarons de distintos sabores y colores.', 'https://www.annarecetasfaciles.com/files/macarons-1-815x458.jpg', 4.9, 3.00),
+('Strudel de Manzana', 'Postre tradicional austríaco con manzana, pasas y canela.', 'https://www.cucinare.tv/wp-content/uploads/2020/02/Strudel.jpg', 4.5, 10.25),
+('Éclairs de Chocolate', 'Barquillos rellenos de crema pastelera y cubiertos de chocolate.', 'https://www.paulinacocina.net/wp-content/uploads/2022/06/eclairs-de-chocolate-receta.jpg', 4.7, 3.50),
+('Cheesecake de Dulce de Leche', 'Suave tarta de queso con salsa de dulce de leche.', 'https://www.lanacion.com.ar/resizer/v2/cheesecake-de-dulce-de-leche-EVQ2K5Q5ZJAQ7JZ4J3QJXGX7BU.jpg', 4.8, 14.00),
+('Volcán de Chocolate', 'Pastel individual con corazón líquido de chocolate.', 'https://www.divinacocina.es/wp-content/uploads/volcan-chocolate-1m.jpg', 4.9, 6.50),
+('Tiramisú Clásico', 'Postre italiano con café, mascarpone y bizcochos de soletilla.', 'https://www.hogarmania.com/archivos/201204/tiramisu-xl-668x400x80xX.jpg', 4.8, 9.75),
+('Mousse de Chocolate', 'Postre ligero de chocolate con un 70% de cacao.', 'https://www.recetasderechupete.com/wp-content/uploads/2015/12/mousse-de-chocolate.jpg', 4.6, 7.25),
+('Panna Cotta con Frutos Rojos', 'Crema italiana cocida con salsa de frutos del bosque.', 'https://www.annarecetasfaciles.com/files/panna-cotta-frambuesas-1-scaled.jpg', 4.7, 8.00),
+('Galletas Decoradas', 'Galletas de mantequilla con diseños artesanales.', 'https://i.blogs.es/7d2a5a/galletas-decoradas/1366_2000.jpg', 4.4, 1.75),
+('Tarta de Queso con Frambuesas', 'Clásica New York cheesecake con coulis de frambuesa.', 'https://www.hogarmania.com/archivos/201911/tarta-queso-frambuesas-xl-668x400x80xX.jpg', 4.9, 15.50),
+('Bombones de Chocolate', 'Surrido de bombones rellenos de distintos sabores.', 'https://www.recetasderechupete.com/wp-content/uploads/2019/12/bombones-de-chocolate.jpg', 4.8, 12.00),
+('Crepes Suzette', 'Crepes flambeados con salsa de naranja y Grand Marnier.', 'https://www.divinacocina.es/wp-content/uploads/crepes-suzette.jpg', 4.7, 11.25);
