@@ -11,43 +11,47 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
 
 <body>
   <header th:replace="~{layout/plantilla :: header}"></header>
-ody>
-    <div class="container">
-        <!-- Sección izquierda - Sobre nosotros -->
-        <div class="left-section">
-            <h1>SOBRE NOSOTROS</h1>
-            <p>Panadería y Repostería Aromas nació en Atenas en 2010, fruto del esfuerzo y la pasión de una madre valiente que, a través del arte de la panadería, sacó adelante a su familia. Desde el inicio, nuestra misión ha sido ofrecer productos horneados de alta calidad, elaborados con tradición y un toque casero que nos distingue.</p>
-            
-            <p>Con el tiempo, este pequeño emprendimiento familiar creció hasta convertirse en un lugar donde la pasión por el pan y los postres une a nuestra familia y clientes. Cada pieza horneada refleja nuestra dedicación y amor por lo que hacemos.</p>
-            
-            <p>Gracias por acompañarnos en este viaje y permitirnos endulzar sus días por más de una década. ¡Bienvenidos a nuestra familia!</p>
-        </div>
-        
-          <!-- Sección derecha -->
+  <div class="container">
+    <!-- Sección izquierda - Sobre nosotros -->
+    <div class="left-section">
+      <h1>SOBRE NOSOTROS</h1>
+      <p>Panadería y Repostería Aromas nació en Atenas en 2010, fruto del esfuerzo y la pasión de una madre valiente
+        que, a través del arte de la panadería, sacó adelante a su familia. Desde el inicio, nuestra misión ha sido
+        ofrecer productos horneados de alta calidad, elaborados con tradición y un toque casero que nos distingue.</p>
+
+      <p>Con el tiempo, este pequeño emprendimiento familiar creció hasta convertirse en un lugar donde la pasión por el
+        pan y los postres une a nuestra familia y clientes. Cada pieza horneada refleja nuestra dedicación y amor por lo
+        que hacemos.</p>
+
+      <p>Gracias por acompañarnos en este viaje y permitirnos endulzar sus días por más de una década. ¡Bienvenidos a
+        nuestra familia!</p>
+    </div>
+
+    <!-- Sección derecha -->
     <div class="right-section">
       <ul class="buttons-container">
-       
-          <a th:href="@{/pasteles/listado}" class="btn btn-nuevo mb-2">
-            <i class="fas fa-plus-circle"></i> Pasteles
-          </a>
-  
-          <a th:href="@{/postres/listado}" class="btn btn-nuevo mb-2">
-            <i class="fas fa-plus-circle"></i> Postres
-          </a>
-    
-        
-          <a th:href="@{/reposterias/listado}" class="btn btn-nuevo mb-2">
-            <i class="fas fa-plus-circle"></i> Repostería
-          </a>
-       
+
+        <a th:href="@{/pasteles/listado}" class="btn btn-nuevo mb-2">
+          <i class="fas fa-plus-circle"></i> Pasteles
+        </a>
+
+        <a th:href="@{/postres/listado}" class="btn btn-nuevo mb-2">
+          <i class="fas fa-plus-circle"></i> Postres
+        </a>
+
+
+        <a th:href="@{/reposterias/listado}" class="btn btn-nuevo mb-2">
+          <i class="fas fa-plus-circle"></i> Repostería
+        </a>
+
       </ul>
-            </div>
-            <!-- Horario -->
-            <div class="schedule">
-                <h3>Nuestro horario</h3>
-                <p>De Lunes a Domingo de 5:00 a.m a 8:00 p.m</p>
-            </div>
-        </div>
+    </div>
+    <!-- Horario -->
+    <div class="schedule">
+      <h3>Nuestro horario</h3>
+      <p>De Lunes a Domingo de 5:00 a.m a 8:00 p.m</p>
+    </div>
+  </div>
 
   <footer th:replace="~{layout/plantilla :: footer}"></footer>
 </body>
