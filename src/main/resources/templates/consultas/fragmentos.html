@@ -2,79 +2,56 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
     <body>
-            <!-- 2 Sección principal para mostrar la informaccion de la entidad pasteles -->
-        <section th:fragment="listadoPasteles" id="pasteles">
-            <div class="row row-cols-4">
-                <div class="card" th:each="pasteles : ${pasteles}">
-                    <figure><img th:src="${pasteles.imagen}" 
-                                 class="card-img-top" alt="..."
-                                 height="200"/>
-                        <figcaption>[[${pasteles.precio}+' ('+${pasteles.calificacion}+')']]
-                        </figcaption>
-                    </figure>
-                    <div class="card-header">
-                        <h4 class="card-title">[[${pasteles.descripcion}]]</h4>
-                    </div>
-                    <div class="card-body">
-                        <p class="card-text">[[${pasteles.nombre}]]</p>                    
-                    </div>
-                </div>
-            </div>
-                   <div class="row row-cols-4">
-                <div class="card" th:each="postres : ${postres}">
-                    <figure><img th:src="${postres.imagen}" 
-                                 class="card-img-top" alt="..."
-                                 height="200"/>
-                        <figcaption>[[${postres.precio}+' ('+${postres.calificacion}+')']]
-                        </figcaption>
-                    </figure>
-                    <div class="card-header">
-                        <h4 class="card-title">[[${postres.descripcion}]]</h4>
-                    </div>
-                    <div class="card-body">
-                        <p class="card-text">[[${postres.nombre}]]</p>                    
+
+        <section th:fragment="listadoPostres" id="postres" class="container my-5">
+            <div class="row g-4 justify-content-center">
+
+                <!-- Pasteles -->
+                <div class="col-md-4" th:each="pasteles : ${pasteles}">
+                    <div class="card shadow product-card h-100">
+                        <img th:src="${pasteles.imagen}" class="card-img-top" alt="..." style="height: 200px; object-fit: cover;">
+                            <div class="card-body">
+                                <h5 class="card-title" th:text="${pasteles.descripcion}"></h5>
+                                <p class="card-text" th:text="${pasteles.nombre}"></p>
+                            </div>
+                            <div class="card-footer text-muted text-center">
+                                [[${pasteles.precio} + ' (' + ${pasteles.calificacion} + ')']]
+                            </div>
                     </div>
                 </div>
-            </div>
-             <div class="row row-cols-4">
-                <div class="card" th:each="reposterias : ${reposterias}">
-                    <figure><img th:src="${reposterias.imagen}" 
-                                 class="card-img-top" alt="..."
-                                 height="200"/>
-                        <figcaption>[[${reposterias.precio}+' ('+${reposterias.calificacion}+')']]
-                        </figcaption>
-                    </figure>
-                    <div class="card-header">
-                        <h4 class="card-title">[[${reposterias.descripcion}]]</h4>
-                    </div>
-                    <div class="card-body">
-                        <p class="card-text">[[${reposterias.nombre}]]</p>                    
+
+                <!-- Postres -->
+                <div class="col-md-4" th:each="postres : ${postres}">
+                    <div class="card shadow product-card h-100">
+                        <img th:src="${postres.imagen}" class="card-img-top" alt="..." style="height: 200px; object-fit: cover;">
+                            <div class="card-body">
+                                <h5 class="card-title" th:text="${postres.descripcion}"></h5>
+                                <p class="card-text" th:text="${postres.nombre}"></p>
+                            </div>
+                            <div class="card-footer text-muted text-center">
+                                [[${postres.precio} + ' (' + ${postres.calificacion} + ')']]
+                            </div>
                     </div>
                 </div>
+
+                <!-- Reposterías -->
+                <div class="col-md-4" th:each="reposterias : ${reposterias}">
+                    <div class="card shadow product-card h-100">
+                        <img th:src="${reposterias.imagen}" class="card-img-top" alt="..." style="height: 200px; object-fit: cover;">
+                            <div class="card-body">
+                                <h5 class="card-title" th:text="${reposterias.descripcion}"></h5>
+                                <p class="card-text" th:text="${reposterias.nombre}"></p>
+                            </div>
+                            <div class="card-footer text-muted text-center">
+                                [[${reposterias.precio} + ' (' + ${reposterias.calificacion} + ')']]
+                            </div>
+                    </div>
+                </div>
+
             </div>
         </section>
 
-                <!-- 2 Sección principal para mostrar la informaccion de la entidad postres -->
-        <section th:fragment="listadoPostres" id="postres">
-            <div class="row row-cols-4">
-                <div class="card" th:each="postres : ${postres}">
-                    <figure><img th:src="${postres.imagen}" 
-                                 class="card-img-top" alt="..."
-                                 height="200"/>
-                        <figcaption>[[${postres.precio}+' ('+${postres.calificacion}+')']]
-                        </figcaption>
-                    </figure>
-                    <div class="card-header">
-                        <h4 class="card-title">[[${postres.descripcion}]]</h4>
-                    </div>
-                    <div class="card-body">
-                        <p class="card-text">[[${postres.nombre}]]</p>                    
-                    </div>
-                </div>
-            </div>
-        </section>
-                
-          <!-- 2 Sección principal para mostrar la informaccion de la entidad postres -->
+        <!-- 2 Sección principal para mostrar la informaccion de la entidad postres -->
         <section th:fragment="listadoReposterias" id="reposterias">
             <div class="row row-cols-4">
                 <div class="card" th:each="reposterias : ${reposterias}">
@@ -93,43 +70,44 @@
                 </div>
             </div>
         </section>
-   
-            
-            
-            
-            
-        </section>
+
+
+
         <!-- 3 Sección para crear los filtros -->
-        <section th:fragment="filtros" class="bg-light">
-            <div class="row py-2">
-                <div class="col-md-1"></div>
-                <div class="col-md-3">
-                    <form method="POST" th:action="@{/consultas/query1}"
-                          class="was-validated">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="mb-3">
-                                    <label for="precioInf">Precio Inferior</label>
-                                    <input type="number" class="form-control"
-                                           th:value="${precioInf}"
-                                           th:name="precioInf" required="true"/>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="precioSup">Precio Superior</label>
-                                    <input type="number" class="form-control"
-                                           th:value="${precioSup}"
-                                           th:name="precioSup" required="true"/>
-                                </div>
+        <section th:fragment="filtros" class="container my-5">
+            <div class="card shadow mx-auto" style="max-width: 700px;">
+
+                <div class="card-header text-center" style="background-color: var(--warm-beige);">
+                    <h4 class="mb-0"><i class="fas fa-filter"></i> Consultas de Productos</h4>
+                </div>
+
+                <form method="POST" th:action="@{/consultas/query1}" class="needs-validation" novalidate>
+                    <div class="card-body">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label for="precioInf" class="form-label">Precio Inferior</label>
+                                <input type="number" class="form-control" th:value="${precioInf}"
+                                       th:name="precioInf" required />
+                                <div class="invalid-feedback">Campo obligatorio</div>
                             </div>
-                            <div class="card-footer text-center">
-                                  <button type="submit" class="btn btn-editar">
-                                <i class="fas fa-paper-plane"></i> Consultar
-                            </button>
+
+                            <div class="col-md-6">
+                                <label for="precioSup" class="form-label">Precio Superior</label>
+                                <input type="number" class="form-control" th:value="${precioSup}"
+                                       th:name="precioSup" required />
+                                <div class="invalid-feedback">Campo obligatorio</div>
                             </div>
                         </div>
-                    </form>
-                </div>
+                    </div>
+
+                    <div class="card-footer text-center">
+                        <button type="submit" class="btn btn-editar">
+                            <i class="fas fa-paper-plane"></i> Consultar
+                        </button>
+                    </div>
+                </form>
             </div>
-        </section>         
+        </section>
+
     </body>
 </html>

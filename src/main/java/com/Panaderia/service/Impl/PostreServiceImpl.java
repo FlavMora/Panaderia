@@ -8,6 +8,13 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.stereotype.Service;
+
+import org.springframework.transaction.annotation.Transactional;
+
+
 @Service
 public class PostreServiceImpl implements PostreService {
 
@@ -36,4 +43,12 @@ public class PostreServiceImpl implements PostreService {
   public void deleteById(Integer id) {
     postreRepository.deleteById(id);
   }
+  
+   @Override
+   @Transactional(readOnly=true)
+   public List<Postre>findByPrecioBetweenOrderByDescripcion(double precioInf, double precioSup) {
+        return postreRepository.findByPrecioBetweenOrderByDescripcion(precioInf, precioSup);
+    }
+    
+    
 }

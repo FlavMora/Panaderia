@@ -45,7 +45,7 @@ public class PastelServiceImpl implements PastelService {
     pastelRepository.deleteById(id);
   }
   
-   // Lista de productos con precio entre ordendados por descripción ConsultaAmpliada
+   //
    @Override
    @Transactional(readOnly=true)
    public List<Pastel>findByPrecioBetweenOrderByDescripcion(double precioInf, double precioSup) {

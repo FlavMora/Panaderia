@@ -35,28 +35,34 @@ public class Consultas {
     //Consultas ampliadas
     @GetMapping("/listado")
     public String listado(Model model) {
-        var pastel = pastelService.findAll();
-        model.addAttribute("pasteles", pastel);
-        
-        
-        
-        
-        return "/consultas/listado";
+    var pasteles = pastelService.findAll();
+    var postres = postreService.findAll();
+    var reposterias = reposteriaService.findAll();
+
+    model.addAttribute("pasteles", pasteles);
+    model.addAttribute("postres", postres);
+    model.addAttribute("reposterias", reposterias);
+
+    return "/consultas/listado";
+}
     
-    
-    
-    }
-    
-    @PostMapping("/query1")
-    public String consultaQuery1(@RequestParam(value = "precioInf") double
-    precioInf,
-    @RequestParam(value = "precioSup") double precioSup, Model model){
-        var pasteles =
-        pastelService.findByPrecioBetweenOrderByDescripcion(precioInf,
-        precioSup);
-        model.addAttribute("pasteles", pasteles);
-        model.addAttribute("precioInf", precioInf);
-        model.addAttribute("precioSup", precioSup);
-        return "/consultas/listado";
-    }
+@PostMapping("/query1")
+    public String consultaQuery1(
+    @RequestParam(value = "precioInf") double precioInf,
+    @RequestParam(value = "precioSup") double precioSup,
+    Model model) {
+
+    var pasteles = pastelService.findByPrecioBetweenOrderByDescripcion(precioInf, precioSup);
+    var postres = postreService.findByPrecioBetweenOrderByDescripcion(precioInf, precioSup);
+    var reposterias = reposteriaService.findByPrecioBetweenOrderByDescripcion(precioInf, precioSup);
+
+    model.addAttribute("pasteles", pasteles);
+    model.addAttribute("postres", postres);
+    model.addAttribute("reposterias", reposterias);
+    model.addAttribute("precioInf", precioInf);
+    model.addAttribute("precioSup", precioSup);
+
+    return "/consultas/listado";
+}
+
 }

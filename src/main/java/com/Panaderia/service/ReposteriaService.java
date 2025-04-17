@@ -12,5 +12,6 @@ public interface ReposteriaService {
   Reposteria save(Reposteria reposteria);
 
   void deleteById(Integer id);
+  public List<Reposteria>findByPrecioBetweenOrderByDescripcion(double precioInf, double precioSup);
 }
 

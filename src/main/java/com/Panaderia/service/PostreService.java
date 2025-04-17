@@ -12,4 +12,6 @@ public interface PostreService {
   Postre save(Postre postre);
 
   void deleteById(Integer id);
+  
+ public List<Postre>findByPrecioBetweenOrderByDescripcion(double precioInf, double precioSup);
 }
