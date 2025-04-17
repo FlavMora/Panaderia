@@ -8,6 +8,14 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.stereotype.Service;
+
+import org.springframework.transaction.annotation.Transactional;
+
+
+
 @Service
 public class PastelServiceImpl implements PastelService {
 
@@ -36,4 +44,14 @@ public class PastelServiceImpl implements PastelService {
   public void deleteById(Integer id) {
     pastelRepository.deleteById(id);
   }
+  
+   // Lista de productos con precio entre ordendados por descripción ConsultaAmpliada
+   @Override
+   @Transactional(readOnly=true)
+   public List<Pastel>findByPrecioBetweenOrderByDescripcion(double precioInf, double precioSup) {
+        return pastelRepository.findByPrecioBetweenOrderByDescripcion(precioInf, precioSup);
+    }
+    
+    
+    
 }

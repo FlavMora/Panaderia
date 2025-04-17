@@ -9,6 +9,7 @@ import com.Panaderia.domain.Pastel;
 import java.util.List;
 import java.util.Optional;
 
+
 public interface PastelService {
  List<Pastel> findAll();
 
@@ -17,4 +18,6 @@ public interface PastelService {
  Pastel save(Pastel pastel);
 
   void deleteById(Integer id);
+  
+  public List<Pastel>findByPrecioBetweenOrderByDescripcion(double precioInf, double precioSup);
 }
