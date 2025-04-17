@@ -20,6 +20,38 @@
                     </div>
                 </div>
             </div>
+                   <div class="row row-cols-4">
+                <div class="card" th:each="postres : ${postres}">
+                    <figure><img th:src="${postres.imagen}" 
+                                 class="card-img-top" alt="..."
+                                 height="200"/>
+                        <figcaption>[[${postres.precio}+' ('+${postres.calificacion}+')']]
+                        </figcaption>
+                    </figure>
+                    <div class="card-header">
+                        <h4 class="card-title">[[${postres.descripcion}]]</h4>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">[[${postres.nombre}]]</p>                    
+                    </div>
+                </div>
+            </div>
+             <div class="row row-cols-4">
+                <div class="card" th:each="reposterias : ${reposterias}">
+                    <figure><img th:src="${reposterias.imagen}" 
+                                 class="card-img-top" alt="..."
+                                 height="200"/>
+                        <figcaption>[[${reposterias.precio}+' ('+${reposterias.calificacion}+')']]
+                        </figcaption>
+                    </figure>
+                    <div class="card-header">
+                        <h4 class="card-title">[[${reposterias.descripcion}]]</h4>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">[[${reposterias.nombre}]]</p>                    
+                    </div>
+                </div>
+            </div>
         </section>
 
                 <!-- 2 Sección principal para mostrar la informaccion de la entidad postres -->
@@ -77,22 +109,22 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="mb-3">
-                                    <label for="precioInf">[[#{consultas.precio.inferior}]]</label>
+                                    <label for="precioInf">Precio Inferior</label>
                                     <input type="number" class="form-control"
                                            th:value="${precioInf}"
                                            th:name="precioInf" required="true"/>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="precioSup">[[#{consultas.precio.superior}]]</label>
+                                    <label for="precioSup">Precio Superior</label>
                                     <input type="number" class="form-control"
                                            th:value="${precioSup}"
                                            th:name="precioSup" required="true"/>
                                 </div>
                             </div>
                             <div class="card-footer text-center">
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="fas fa-check"></i> [[#{consultas.ampliadas}]]
-                                </button>
+                                  <button type="submit" class="btn btn-editar">
+                                <i class="fas fa-paper-plane"></i> Consultar
+                            </button>
                             </div>
                         </div>
                     </form>
