@@ -1,3 +1,5 @@
+drop schema if exists panaderia; 
+drop user if exists panadero; 
 -- Create user
 CREATE USER 'panadero'@'%' IDENTIFIED BY 'panadero_password';
 CREATE DATABASE panaderia CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
