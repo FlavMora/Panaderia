@@ -1,0 +1,104 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{layout/plantilla :: head}">
+    <title>Reseñas de Nuestros Clientes</title>
+</head>
+
+
+<body>
+    <header>
+        <nav th:replace="~{layout/plantilla :: navbar}"></nav>
+    </header>
+
+    <div th:fragment="content" class="container my-5">
+        <div class="card shadow mx-auto" style="max-width: 900px;">
+
+            <div class="card-header" style="background-color: var(--warm-beige);">
+                <h2 class="mb-0"><i class="fas fa-comment-dots"></i> Reseñas de Clientes</h2>
+            </div>
+
+            <div class="card-body">
+                <form th:action="@{/resena/guardar}" th:object="${resena}" method="POST" class="mb-5 needs-validation"
+                    novalidate>
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <input type="text" class="form-control" th:field="*{autor}" placeholder="Tu nombre"
+                                required>
+                            <div class="invalid-feedback">Campo obligatorio</div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <select class="form-select" th:field="*{calificacion}" required>
+                                <option value="" disabled selected>Seleccione calificación</option>
+                                <option th:each="i : ${#numbers.sequence(1,5)}" th:value="${i}"
+                                    th:text="${i}+' estrellas'"></option>
+                            </select>
+                        </div>
+
+                        <div class="col-12 mt-3">
+                            <textarea class="form-control" th:field="*{contenido}" rows="3"
+                                placeholder="Escribe tu experiencia..." required></textarea>
+                        </div>
+
+                        <div class="col-12 text-end">
+                            <button type="submit" class="btn btn-editar">
+                                <i class="fas fa-paper-plane"></i> Publicar Reseña
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
+                <div th:each="resena : ${resenas}" class="card mb-3 product-card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <h5 class="card-title" th:text="${resena.autor}"></h5>
+                            <small class="text-muted"
+                                th:text="${#temporals.format(resena.fecha, 'dd/MM/yyyy HH:mm')}"></small>
+                        </div>
+
+                        <div class="rating-stars mb-2" th:attr="data-rating=${resena.calificacion}">
+                            <i class="fas fa-star" th:each="i : ${#numbers.sequence(1,5)}"></i>
+                        </div>
+
+                        <p class="card-text" th:text="${resena.contenido}"></p>
+
+                        <div class="text-end">
+                            <a th:href="@{/resena/eliminar/{id}(id=${resena.id})}" class="btn btn-sm btn-eliminar">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:fragment="script">
+        <script>
+            (() => {
+                'use strict'
+                const forms = document.querySelectorAll('.needs-validation')
+                Array.from(forms).forEach(form => {
+                    form.addEventListener('submit', event => {
+                        if (!form.checkValidity()) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+                        form.classList.add('was-validated')
+                    }, false)
+                })
+            })()
+
+            // Actualizar estrellas
+            document.querySelectorAll('.rating-stars').forEach(container => {
+                const rating = parseInt(container.dataset.rating)
+                const stars = container.querySelectorAll('.fa-star')
+                stars.forEach((star, index) => {
+                    star.classList.toggle('text-warning', index < rating)
+                })
+            })
+        </script>
+    </div>
+</body>
+
+</html>

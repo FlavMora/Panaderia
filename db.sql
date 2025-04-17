@@ -75,3 +75,19 @@ INSERT INTO reposterias (nombre, descripcion, imagen, calificacion, precio) VALU
 ('Tarta de Queso con Frambuesas', 'Clásica New York cheesecake con coulis de frambuesa.', 'https://s1.elespanol.com/2017/04/07/cocinillas/cocinillas_206742125_116317697_1706x960.jpg', 4.9, 15.50),
 ('Bombones de Chocolate', 'Surrido de bombones rellenos de distintos sabores.', 'https://content-cocina.lecturas.com/medio/2021/01/04/chocovasitos_de_frutos_secos_y_bombones_rellenos_de_caramelo_06101458_800x800.jpg', 4.8, 12.00),
 ('Crepes Suzette', 'Crepes flambeados con salsa de naranja y Grand Marnier.', 'https://www.divinacocina.es/wp-content/uploads/crepes-suzette.jpg', 4.7, 11.25);
+
+
+
+-- Reseña tabla
+CREATE TABLE resena (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    autor VARCHAR(50) NOT NULL,
+    contenido VARCHAR(500) NOT NULL,
+    calificacion INT NOT NULL CHECK (calificacion BETWEEN 1 AND 5),
+    fecha TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+INSERT INTO resena (autor, contenido, calificacion, fecha) VALUES
+('María Pérez', 'El mejor pan dulce que he probado, ¡siempre fresco!', 5, NOW()),
+('Juan López', 'Buen servicio pero el estacionamiento es complicado', 4, NOW() - INTERVAL 1 DAY),
+('Ana Sánchez', 'Los pasteles son una obra de arte, vale cada centavo', 5, NOW() - INTERVAL 2 DAY);
