@@ -94,3 +94,30 @@ INSERT INTO resena (autor, contenido, calificacion, fecha) VALUES
 ('María Pérez', 'El mejor pan dulce que he probado, ¡siempre fresco!', 5, NOW()),
 ('Juan López', 'Buen servicio pero el estacionamiento es complicado', 4, NOW() - INTERVAL 1 DAY),
 ('Ana Sánchez', 'Los pasteles son una obra de arte, vale cada centavo', 5, NOW() - INTERVAL 2 DAY);
+
+
+
+use panaderia;
+
+CREATE TABLE pedido (
+  id_pedido INT AUTO_INCREMENT PRIMARY KEY,
+  id_usuario INT NOT NULL,
+  fecha DATE,
+  total DECIMAL(10,2),
+  estado INT,
+  FOREIGN KEY fk_pedido_usuario (id_usuario) references usuario(id_usuario)  
+);
+
+CREATE TABLE orden (
+  id_orden INT AUTO_INCREMENT PRIMARY KEY,
+  id_pedido INT,
+  id_reposterias INT NULL,
+  id_postres INT NULL,
+  id_pasteles INT NULL,
+  precio DECIMAL(10,2),
+  cantidad INT,
+  FOREIGN KEY fk_orden_pedido (id_pedido) REFERENCES pedido(id_pedido),
+  FOREIGN KEY fk_orden_reposterias (id_reposterias) REFERENCES reposterias(id),
+  FOREIGN KEY fk_orden_postres (id_postres) REFERENCES postres(id),
+  FOREIGN KEY fk_orden_pasteles (id_pasteles) REFERENCES pasteles(id)
+);
