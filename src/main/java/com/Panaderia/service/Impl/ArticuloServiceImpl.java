@@ -26,10 +26,8 @@ import com.Panaderia.dao.PostreDao;
 @Service
 public class ArticuloServiceImpl implements ArticuloService {
 
-    private final List<Articulo> listaArticulos = new ArrayList<>();
-
-    @Autowired
-    private UsuarioService usuarioService;
+    //@Autowired
+   // private UsuarioService usuarioService;
 
     @Autowired
     private PastelDao pastelDao;
@@ -57,7 +55,7 @@ public class ArticuloServiceImpl implements ArticuloService {
         for (Articulo a : listaArticulos) {
             if (Objects.equals(a.getIdPan(), articulo.getIdPan()) &&
                 Objects.equals(a.getTipo(), articulo.getTipo())) {
-                if (a.getCantidad() < articulo.getExistencias()) {
+                if (a.getCantidad() < articulo.getCantidad()) {
                     a.setCantidad(a.getCantidad() + 1);
                 }
                 existe = true;
@@ -108,7 +106,7 @@ public class ArticuloServiceImpl implements ArticuloService {
             }
         }
     }
-
+/*
     @Override
     public void Pidiendo() {
         System.out.println("Procesando Pedido");
@@ -162,5 +160,5 @@ public class ArticuloServiceImpl implements ArticuloService {
         pedido.setTotal(total);
         pedidoDao.save(pedido);
         listaArticulos.clear();
-    }
+    }*/
 }

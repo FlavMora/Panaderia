@@ -19,5 +19,5 @@ public interface ArticuloService {
     
     public void actualiza(Articulo articulo);
     
-    public void Pidiendo();
+    //public void Pidiendo();
 }
