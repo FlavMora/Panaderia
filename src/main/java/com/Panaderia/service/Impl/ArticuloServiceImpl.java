@@ -23,20 +23,144 @@ import com.Panaderia.dao.ReposteriaDao;
 import com.Panaderia.dao.PastelDao;
 import com.Panaderia.dao.PostreDao;
 
+@Service
 public class ArticuloServiceImpl implements ArticuloService {
-    
-     @Override
-    public Articulo get(Articulo articulo) {
-    // Implementación que busca por tipo y idProducto
-    return articuloRepository.findByTipoAndIdProducto(articulo.getTipo(), articulo.getIdPan());
-}
 
-public void delete(Articulo articulo) {
-    // Implementación que elimina por tipo y idProducto
-    Articulo existingArticulo = findByTipoAndIdProducto(articulo.getTipo(), articulo.getIdPan());
-    if (existingArticulo != null) {
-        articuloRepository.delete(existingArticulo);
+    private final List<Articulo> listaArticulos = new ArrayList<>();
+
+    @Autowired
+    private UsuarioService usuarioService;
+
+    @Autowired
+    private PastelDao pastelDao;
+
+    @Autowired
+    private PostreDao postreDao;
+
+    @Autowired
+    private ReposteriaDao reposteriaDao;
+
+    @Autowired
+    private PedidoDao pedidoDao;
+
+    @Autowired
+    private OrdenDao ordenDao;
+
+    @Override
+    public List<Articulo> gets() {
+        return listaArticulos;
     }
-}
 
+    @Override
+    public void save(Articulo articulo) {
+        boolean existe = false;
+        for (Articulo a : listaArticulos) {
+            if (Objects.equals(a.getIdPan(), articulo.getIdPan()) &&
+                Objects.equals(a.getTipo(), articulo.getTipo())) {
+                if (a.getCantidad() < articulo.getExistencias()) {
+                    a.setCantidad(a.getCantidad() + 1);
+                }
+                existe = true;
+                break;
+            }
+        }
+        if (!existe) {
+            articulo.setCantidad(1);
+            listaArticulos.add(articulo);
+        }
+    }
+
+    @Override
+    public void delete(Articulo articulo) {
+        int posicion = -1;
+        boolean existe = false;
+        for (Articulo a : listaArticulos) {
+            posicion++;
+            if (Objects.equals(a.getIdPan(), articulo.getIdPan()) &&
+                Objects.equals(a.getTipo(), articulo.getTipo())) {
+                existe = true;
+                break;
+            }
+        }
+        if (existe) {
+            listaArticulos.remove(posicion);
+        }
+    }
+
+    @Override
+    public Articulo get(Articulo articulo) {
+        for (Articulo a : listaArticulos) {
+            if (Objects.equals(a.getIdPan(), articulo.getIdPan()) &&
+                Objects.equals(a.getTipo(), articulo.getTipo())) {
+                return a;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public void actualiza(Articulo articulo) {
+        for (Articulo a : listaArticulos) {
+            if (Objects.equals(a.getIdPan(), articulo.getIdPan()) &&
+                Objects.equals(a.getTipo(), articulo.getTipo())) {
+                a.setCantidad(articulo.getCantidad());
+                break;
+            }
+        }
+    }
+
+    @Override
+    public void Pidiendo() {
+        System.out.println("Procesando Pedido");
+
+        String username;
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof UserDetails userDetails) {
+            username = userDetails.getUsername();
+        } else {
+            username = principal.toString();
+        }
+
+        if (username.isBlank()) return;
+
+        Usuario usuario = usuarioService.getUsuarioPorUsername(username);
+        if (usuario == null) return;
+
+        Pedido pedido = new Pedido(usuario.getIdUsuario());
+        pedido = pedidoDao.save(pedido);
+
+        double total = 0;
+        for (Articulo a : listaArticulos) {
+            System.out.println("Artículo: " + a.getDescripcion()
+                    + " Cantidad: " + a.getCantidad()
+                    + " Total: " + a.getPrecio() * a.getCantidad());
+            Orden orden = new Orden(pedido.getIdPedido(), a.getIdPan(), a.getPrecio(), a.getCantidad(), a.getTipo());
+            ordenDao.save(orden);
+
+           
+            switch (a.getTipo().toLowerCase()) {
+                case "pastel" -> {
+                    var pastel = pastelDao.getReferenceById(a.getIdPan());
+                    pastel.setExistencias(pastel.getExistencias() - a.getCantidad());
+                    pastelDao.save(pastel);
+                }
+                case "postre" -> {
+                    var postre = postreDao.getReferenceById(a.getIdPan());
+                    postre.setExistencias(postre.getExistencias() - a.getCantidad());
+                    postreDao.save(postre);
+                }
+                case "reposteria" -> {
+                    var reposteria = reposteriaDao.getReferenceById(a.getIdPan());
+                    reposteria.setExistencias(reposteria.getExistencias() - a.getCantidad());
+                    reposteriaDao.save(reposteria);
+                }
+            }
+
+            total += a.getPrecio() * a.getCantidad();
+        }
+
+        pedido.setTotal(total);
+        pedidoDao.save(pedido);
+        listaArticulos.clear();
+    }
 }

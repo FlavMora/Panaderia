@@ -48,7 +48,7 @@ public class CarritoController {
     @GetMapping("/carrito/agregar/{tipo}/{idPan}")
     public ModelAndView agregarArticulo(
             @PathVariable String tipo,
-            @PathVariable Long idPan,
+            @PathVariable Integer idPan,
             Model model) {
 
         Articulo articulo = new Articulo();
@@ -60,15 +60,15 @@ public class CarritoController {
         if (articulo2 == null) {
             switch (tipo.toLowerCase()) {
                 case "pastel":
-                    Pastel pastel = pastelService.getPastelById(idPan);
+                    Pastel pastel = pastelService.findById(idPan).orElseThrow(() -> new RuntimeException("Pastel no encontrado"));
                     articulo2 = new Articulo(pastel);
                     break;
                 case "postre":
-                    Postre postre = postreService.getPostreById(idPan);
+                    Postre postre = postreService.findById(idPan).orElseThrow(() -> new RuntimeException("Postre no encontrado"));
                     articulo2 = new Articulo(postre);
                     break;
                 case "reposteria":
-                    Reposteria reposteria = reposteriaService.getReposteriaById(idPan);
+                    Reposteria reposteria = reposteriaService.findById(idPan).orElseThrow(() -> new RuntimeException("Reposteria no encontrado"));
                     articulo2 = new Articulo(reposteria);
                     break;
                 default:
@@ -89,7 +89,7 @@ public class CarritoController {
     @GetMapping("/carrito/eliminar/{tipo}/{idPan}")
     public String eliminarArticulo(
             @PathVariable String tipo,
-            @PathVariable Long idPan) {
+            @PathVariable Integer idPan) {
 
         Articulo articulo = new Articulo();
         articulo.setTipo(tipo);
@@ -102,7 +102,7 @@ public class CarritoController {
     @GetMapping("/carrito/modificar/{tipo}/{idPan}")
     public String modificarArticulo(
             @PathVariable String tipo,
-            @PathVariable Long idPan,
+            @PathVariable Integer idPan,
             Model model) {
 
         Articulo articulo = new Articulo();

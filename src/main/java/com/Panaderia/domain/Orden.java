@@ -15,21 +15,21 @@ public class Orden implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id_orden")
-    private Long idOrden;
-    private Long idPedido;
-    private Long idReposterias; 
-    private Long idPostres;
-    private Long idPasteles; 
+    private Integer idOrden;
+    private Integer idPedido;
+    private Integer idReposterias; 
+    private Integer idPostres;
+    private Integer idPasteles; 
     private double precio;
     private int cantidad;    
     
     public Orden() {
     }
 
-    public Orden(Long idPedido, Long idReposterias,Long idPostres,Long idPasteles, double precio, int cantidad) {
+    public Orden(Integer idPedido, Integer idReposterias,Integer idPostres,Integer idPasteles, double precio, int cantidad) {
         this.idPedido = idPedido;
         this.idReposterias = idReposterias;
-        this.idPostres = idPostress;
+        this.idPostres = idPostres;
         this.idPasteles = idPasteles;
         this.precio = precio;
         this.cantidad = cantidad;
