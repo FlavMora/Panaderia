@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Admin Dashboard</title>
+</head>
+<body>
+    <h1>Welcome, Admin!</h1>
+    <div>
+        <h2>Gestión de Pasteles</h2>
+        <a th:href="@{/pasteles/listado}" class="btn btn-nuevo mb-2">
+            <i class="fas fa-list"></i> Listar Pasteles
+        </a>
+        <a th:href="@{/pasteles/nuevo}" class="btn btn-nuevo mb-2">
+            <i class="fas fa-plus-circle"></i> Nuevo Pastel
+        </a>
+    </div>
+    <div>
+        <h2>Gestión de Postres</h2>
+        <a th:href="@{/postres/listado}" class="btn btn-nuevo mb-2">
+            <i class="fas fa-list"></i> Listar Postres
+        </a>
+        <a th:href="@{/postres/nuevo}" class="btn btn-nuevo mb-2">
+            <i class="fas fa-plus-circle"></i> Nuevo Postre
+        </a>
+    </div>
+    <div>
+        <h2>Gestión de Reposterías</h2>
+        <a th:href="@{/reposterias/listado}" class="btn btn-nuevo mb-2">
+            <i class="fas fa-list"></i> Listar Reposterías
+        </a>
+        <a th:href="@{/reposterias/nuevo}" class="btn btn-nuevo mb-2">
+            <i class="fas fa-plus-circle"></i> Nueva Repostería
+        </a>
+    </div>
+    <div>
+        <h2>Gestión de Reseñas</h2>
+        <a th:href="@{/resena/listado}" class="btn btn-nuevo mb-2">
+            <i class="fas fa-list"></i> Listar Reseñas
+        </a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Cliente Dashboard</title>
+</head>
+<body>
+    <h1>Welcome, Cliente!</h1>
+    <div>
+        <h2>Ver Productos</h2>
+        <a th:href="@{/pasteles/listado}" class="btn btn-nuevo mb-2">
+            <i class="fas fa-list"></i> Ver Pasteles
+        </a>
+        <a th:href="@{/postres/listado}" class="btn btn-nuevo mb-2">
+            <i class="fas fa-list"></i> Ver Postres
+        </a>
+        <a th:href="@{/reposterias/listado}" class="btn btn-nuevo mb-2">
+            <i class="fas fa-list"></i> Ver Reposterías
+        </a>
+    </div>
+    <div>
+        <h2>Reseñas</h2>
+        <a th:href="@{/resena/listado}" class="btn btn-nuevo mb-2">
+            <i class="fas fa-list"></i> Ver Reseñas
+        </a>
+        <a th:href="@{/resena/nuevo}" class="btn btn-nuevo mb-2">
+            <i class="fas fa-plus-circle"></i> Nueva Reseña
+        </a>
+    </div>
+</body>
+</html>
