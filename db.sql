@@ -136,3 +136,21 @@ WHERE existencias = 0;
 UPDATE reposterias
 SET existencias = 100
 WHERE existencias = 0;
+
+
+
+CREATE TABLE factura (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    fecha DATETIME NOT NULL,
+    total DECIMAL(19,2) NOT NULL
+);
+
+CREATE TABLE detalle_factura (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    factura_id BIGINT NOT NULL,
+    descripcion VARCHAR(255) NOT NULL,
+    precio_unitario DECIMAL(19,2) NOT NULL,
+    cantidad INT NOT NULL,
+    subtotal DECIMAL(19,2) NOT NULL,
+    FOREIGN KEY (factura_id) REFERENCES factura(id)
+);

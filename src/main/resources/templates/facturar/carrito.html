@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{layout/plantilla :: head}">
+    <title>Facturación - Carrito</title>
+</head>
+
+<body>
+    <header>
+        <nav th:replace="~{layout/plantilla :: navbar}"></nav>
+    </header>
+
+    <section class="container my-5">
+        <h2>Resumen de tu compra</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Descripción</th>
+                    <th class="text-center">Cantidad</th>
+                    <th class="text-end">Precio Unitario</th>
+                    <th class="text-end">Subtotal</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="item, iterStat : ${listaItems}">
+                    <td th:text="${iterStat.count}"></td>
+                    <td th:text="${item.descripcion}"></td>
+                    <td class="text-center" th:text="${item.cantidad}"></td>
+                    <td class="text-end" th:text="'₡ ' + ${item.precio}"></td>
+                    <td class="text-end" th:text="'₡ ' + (${item.precio} * ${item.cantidad})"></td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="4" class="text-end"><strong>Total:</strong></td>
+                    <td class="text-end" th:text="'₡ ' + ${carritoTotal}"></td>
+                </tr>
+            </tfoot>
+        </table>
+
+        <form th:action="@{/facturar/carrito}" method="post" class="text-end">
+            <button type="submit" class="btn btn-nuevo">
+                <i class="fas fa-credit-card"></i> Confirmar compra
+            </button>
+        </form>
+    </section>
+
+    <footer th:replace="~{layout/plantilla :: footer}"></footer>
+</body>
+
+</html>

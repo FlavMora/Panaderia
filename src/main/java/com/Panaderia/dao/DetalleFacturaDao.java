@@ -5,14 +5,10 @@
 
 package com.Panaderia.dao;
 
-import com.Panaderia.domain.Orden;
+import com.Panaderia.domain.DetalleFactura;
 import org.springframework.data.jpa.repository.JpaRepository;
-import java.util.List;
 import org.springframework.stereotype.Repository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 @Repository
-public interface OrdenDao extends JpaRepository<Orden, Integer> {
- 
+public interface DetalleFacturaDao extends JpaRepository<DetalleFactura, Long> {
 }

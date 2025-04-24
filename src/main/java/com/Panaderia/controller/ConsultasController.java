@@ -23,7 +23,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/consultas")
-public class Consultas {
+public class ConsultasController {
 
     @Autowired
     private PastelService pastelService;

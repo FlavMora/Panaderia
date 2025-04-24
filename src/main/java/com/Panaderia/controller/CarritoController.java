@@ -13,6 +13,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -31,13 +33,21 @@ public class CarritoController {
 
     @ModelAttribute("carrito")
     public List<Articulo> inicializarCarrito() {
-        return articuloService.gets();
+        return new ArrayList<>();
     }
 
     @GetMapping({ "/", "/listado" })
-    public String verCarrito(@ModelAttribute("carrito") List<Articulo> carrito, Model model) {
+    public String verCarrito(
+            @ModelAttribute("carrito") List<Articulo> carrito,
+            Model model) {
         model.addAttribute("listaItems", carrito);
         model.addAttribute("listaTotal", carrito.size());
+
+        BigDecimal total = carrito.stream()
+                .map(a -> a.getPrecio().multiply(new BigDecimal(a.getCantidad())))
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+        model.addAttribute("carritoTotal", total);
+
         return "carrito/listado";
     }
 
@@ -45,21 +55,17 @@ public class CarritoController {
     public String agregarArticulo(
             @PathVariable String tipo,
             @PathVariable Integer idPan,
-            @ModelAttribute("carrito") List<Articulo> carrito,
-            Model model) {
+            @ModelAttribute("carrito") List<Articulo> carrito) {
 
         Articulo clave = new Articulo();
         clave.setTipo(tipo);
         clave.setIdPan(idPan);
 
-        Articulo existente = articuloService.get(clave);
+        Articulo existente = articuloService.get(clave, carrito);
 
         if (existente != null) {
             existente.setCantidad(existente.getCantidad() + 1);
-            return "redirect:/carrito/listado";
-        }
-
-        if (existente == null) {
+        } else {
             Articulo nuevo;
             switch (tipo.toLowerCase()) {
                 case "pastel":
@@ -80,11 +86,9 @@ public class CarritoController {
                 default:
                     return "redirect:/";
             }
-            articuloService.save(nuevo);
-            carrito.add(nuevo);
+            articuloService.save(nuevo, carrito);
         }
 
-        model.addAttribute("listaArticulos", carrito);
         return "redirect:/carrito/listado";
     }
 
@@ -97,9 +101,8 @@ public class CarritoController {
         Articulo a = new Articulo();
         a.setTipo(tipo);
         a.setIdPan(idPan);
-        articuloService.delete(a);
+        articuloService.delete(a, carrito);
 
-        carrito.removeIf(item -> item.getTipo().equals(tipo) && item.getIdPan().equals(idPan));
         return "redirect:/carrito/listado";
     }
 
@@ -131,17 +134,27 @@ public class CarritoController {
             @RequestParam("cantidad") Integer cantidad,
             @ModelAttribute("carrito") List<Articulo> carrito) {
 
-        // Busca el artículo en el carrito
         Articulo articulo = carrito.stream()
-                .filter(item -> item.getTipo().equals(tipo) && item.getIdPan().equals(idPan))
+                .filter(item -> item.getTipo().equalsIgnoreCase(tipo) && item.getIdPan().equals(idPan))
                 .findFirst()
                 .orElse(null);
 
         if (articulo != null) {
-            articulo.setCantidad(cantidad);
-            articuloService.actualiza(articulo);
+            articuloService.actualiza(articulo, carrito);
+
+            if (cantidad <= 0) {
+                articuloService.delete(articulo, carrito);
+            } else {
+                articulo.setCantidad(cantidad);
+            }
         }
 
+        return "redirect:/carrito/listado";
+    }
+
+    @GetMapping("/vaciar")
+    public String vaciarCarrito(@ModelAttribute("carrito") List<Articulo> carrito) {
+        carrito.clear();
         return "redirect:/carrito/listado";
     }
 }
