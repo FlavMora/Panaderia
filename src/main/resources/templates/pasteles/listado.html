@@ -8,7 +8,7 @@
   <header>
     <nav th:replace="~{layout/plantilla :: navbar}"></nav>
   </header>
-  
+
 
   <a th:href="@{/pasteles/nuevo}" class="btn btn-nuevo mb-4">
     <i class="fas fa-plus-circle"></i> Nuevo Pastel
@@ -29,7 +29,7 @@
       </thead>
       <tbody>
         <tr th:each="pastel : ${pasteles}" class="product-card">
-          <td><img class="product-image" th:src="@{${pastel.imagen}}" alt="imagen" height="100" width="100"/></td>
+          <td><img class="product-image" th:src="@{${pastel.imagen}}" alt="imagen" height="100" width="100" /></td>
           <td>[[${pastel.nombre}]]</td>
           <td>[[${pastel.descripcion}]]</td>
           <td>$[[${#numbers.formatDecimal(pastel.precio, 1, 2)}]]</td>
