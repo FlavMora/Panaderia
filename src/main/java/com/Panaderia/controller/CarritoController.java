@@ -2,20 +2,18 @@ package com.Panaderia.controller;
 
 import com.Panaderia.domain.Articulo;
 import com.Panaderia.service.ArticuloService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.servlet.ModelAndView;
 import com.Panaderia.service.PastelService;
 import com.Panaderia.service.PostreService;
 import com.Panaderia.service.ReposteriaService;
 import com.Panaderia.domain.Pastel;
 import com.Panaderia.domain.Postre;
 import com.Panaderia.domain.Reposteria;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/carrito")
@@ -24,7 +22,6 @@ public class CarritoController {
 
     @Autowired
     private ArticuloService articuloService;
-
     @Autowired
     private PastelService pastelService;
     @Autowired
@@ -32,85 +29,119 @@ public class CarritoController {
     @Autowired
     private ReposteriaService reposteriaService;
 
-    @GetMapping("/")
-    public String listado(Model model) {
-        var pasteles = pastelService.findAll();
-        var postres = postreService.findAll();
-        var reposterias = reposteriaService.findAll();
-
-        model.addAttribute("pasteles", pasteles);
-        model.addAttribute("postres", postres);
-        model.addAttribute("reposterias", reposterias);
-
-        return "/index";
+    @ModelAttribute("carrito")
+    public List<Articulo> inicializarCarrito() {
+        return articuloService.gets();
     }
 
-    @GetMapping("/carrito/agregar/{tipo}/{idPan}")
-    public ModelAndView agregarArticulo(
+    @GetMapping({ "/", "/listado" })
+    public String verCarrito(@ModelAttribute("carrito") List<Articulo> carrito, Model model) {
+        model.addAttribute("listaItems", carrito);
+        model.addAttribute("listaTotal", carrito.size());
+        return "carrito/listado";
+    }
+
+    @GetMapping("/agregar/{tipo}/{idPan}")
+    public String agregarArticulo(
             @PathVariable String tipo,
             @PathVariable Integer idPan,
+            @ModelAttribute("carrito") List<Articulo> carrito,
             Model model) {
 
-        Articulo articulo = new Articulo();
-        articulo.setTipo(tipo);
-        articulo.setIdPan(idPan);
+        Articulo clave = new Articulo();
+        clave.setTipo(tipo);
+        clave.setIdPan(idPan);
 
-        Articulo articulo2 = articuloService.get(articulo);
+        Articulo existente = articuloService.get(clave);
 
-        if (articulo2 == null) {
-            switch (tipo.toLowerCase()) {
-                case "pastel":
-                    Pastel pastel = pastelService.findById(idPan).orElseThrow(() -> new RuntimeException("Pastel no encontrado"));
-                    articulo2 = new Articulo(pastel);
-                    break;
-                case "postre":
-                    Postre postre = postreService.findById(idPan).orElseThrow(() -> new RuntimeException("Postre no encontrado"));
-                    articulo2 = new Articulo(postre);
-                    break;
-                case "reposteria":
-                    Reposteria reposteria = reposteriaService.findById(idPan).orElseThrow(() -> new RuntimeException("Reposteria no encontrado"));
-                    articulo2 = new Articulo(reposteria);
-                    break;
-                default:
-                    return new ModelAndView("redirect:/");
-            }
-            articuloService.save(articulo2);
-        } else {
-            articulo2.setCantidad(articulo2.getCantidad() + 1);
-            articuloService.save(articulo2);
+        if (existente != null) {
+            existente.setCantidad(existente.getCantidad() + 1);
+            return "redirect:/carrito/listado";
         }
 
-        var articulos = articuloService.gets();
-        model.addAttribute("listaArticulos", articulos);
+        if (existente == null) {
+            Articulo nuevo;
+            switch (tipo.toLowerCase()) {
+                case "pastel":
+                    Pastel pastel = pastelService.findById(idPan)
+                            .orElseThrow(() -> new RuntimeException("Pastel no encontrado"));
+                    nuevo = new Articulo(pastel);
+                    break;
+                case "postre":
+                    Postre postre = postreService.findById(idPan)
+                            .orElseThrow(() -> new RuntimeException("Postre no encontrado"));
+                    nuevo = new Articulo(postre);
+                    break;
+                case "reposteria":
+                    Reposteria rep = reposteriaService.findById(idPan)
+                            .orElseThrow(() -> new RuntimeException("Repostería no encontrada"));
+                    nuevo = new Articulo(rep);
+                    break;
+                default:
+                    return "redirect:/";
+            }
+            articuloService.save(nuevo);
+            carrito.add(nuevo);
+        }
 
-        return new ModelAndView("/carrito/fragmentos :: verCarrito");
-    }
-
-    @GetMapping("/carrito/eliminar/{tipo}/{idPan}")
-    public String eliminarArticulo(
-            @PathVariable String tipo,
-            @PathVariable Integer idPan) {
-
-        Articulo articulo = new Articulo();
-        articulo.setTipo(tipo);
-        articulo.setIdPan(idPan);
-        articuloService.delete(articulo);
-
+        model.addAttribute("listaArticulos", carrito);
         return "redirect:/carrito/listado";
     }
 
-    @GetMapping("/carrito/modificar/{tipo}/{idPan}")
-    public String modificarArticulo(
+    @GetMapping("/eliminar/{tipo}/{idPan}")
+    public String eliminarArticulo(
             @PathVariable String tipo,
             @PathVariable Integer idPan,
+            @ModelAttribute("carrito") List<Articulo> carrito) {
+
+        Articulo a = new Articulo();
+        a.setTipo(tipo);
+        a.setIdPan(idPan);
+        articuloService.delete(a);
+
+        carrito.removeIf(item -> item.getTipo().equals(tipo) && item.getIdPan().equals(idPan));
+        return "redirect:/carrito/listado";
+    }
+
+    @GetMapping("/modificar/{tipo}/{idPan}")
+    public String modificarArticuloForm(
+            @PathVariable String tipo,
+            @PathVariable Integer idPan,
+            @ModelAttribute("carrito") List<Articulo> carrito,
             Model model) {
 
-        Articulo articulo = new Articulo();
-        articulo.setTipo(tipo);
-        articulo.setIdPan(idPan);
-        articulo = articuloService.get(articulo);
+        Articulo encontrado = carrito.stream()
+                .filter(item -> item.getTipo().equalsIgnoreCase(tipo)
+                        && item.getIdPan().equals(idPan))
+                .findFirst()
+                .orElse(null);
 
-        model.addAttribute("articulo", articulo);
-        return "/carrito/modificar";
+        if (encontrado == null) {
+            return "redirect:/carrito/listado";
+        }
+
+        model.addAttribute("item", encontrado);
+        return "carrito/modificar";
+    }
+
+    @PostMapping("/modificar")
+    public String procesarModificacion(
+            @RequestParam("tipo") String tipo,
+            @RequestParam("idPan") Integer idPan,
+            @RequestParam("cantidad") Integer cantidad,
+            @ModelAttribute("carrito") List<Articulo> carrito) {
+
+        // Busca el artículo en el carrito
+        Articulo articulo = carrito.stream()
+                .filter(item -> item.getTipo().equals(tipo) && item.getIdPan().equals(idPan))
+                .findFirst()
+                .orElse(null);
+
+        if (articulo != null) {
+            articulo.setCantidad(cantidad);
+            articuloService.actualiza(articulo);
+        }
+
+        return "redirect:/carrito/listado";
     }
 }

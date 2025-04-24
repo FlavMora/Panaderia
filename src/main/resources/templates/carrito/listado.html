@@ -6,7 +6,9 @@
         <title>Carrito</title>
     </head>
     <body>
-        <header th:replace="~{layout/plantilla :: header}"/>
+        <header>
+            <nav th:replace="~{layout/plantilla :: navbar}"></nav>
+        </header>
 
         <section th:replace="~{carrito/fragmentos :: listadoCarrito}"/>
 

@@ -23,6 +23,8 @@ public class Postre {
 
     private BigDecimal precio;
 
+    private int existencias;
+
     // Constructores
     public Postre() {
     }
@@ -82,5 +84,9 @@ public class Postre {
 
     public void setPrecio(BigDecimal precio) {
         this.precio = precio;
+    }
+
+    public int getExistencias() {
+        return existencias;
     }
 }

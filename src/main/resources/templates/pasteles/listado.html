@@ -23,7 +23,8 @@
           <th>Descripción</th>
           <th>Precio</th>
           <th>Calificación</th>
-          <th>Acciones</th>
+          <th sec:authorize="isAuthenticated()">Acciones</th>
+          <th sec:authorize="isAuthenticated()">Comprar</th>
         </tr>
       </thead>
       <tbody>
@@ -38,13 +39,22 @@
             </span>
           </td>
           <td>
-            <a th:href="@{/pasteles/modifica/{id}(id=${pastel.id})}" class="btn btn-editar btn-accion me-2">
-              <i class="fas fa-edit"></i>
-            </a>
-            <button class="btn btn-eliminar btn-accion" data-bs-toggle="modal" data-bs-target="#deleteModal"
-              th:attr="data-id=${pastel.id}">
-              <i class="fas fa-trash-alt"></i>
-            </button>
+            <td sec:authorize="hasRole('ADMIN')">
+              <a th:href="@{/pasteles/modifica/{id}(id=${pastel.id})}" class="btn btn-editar btn-accion me-2">
+                <i class="fas fa-edit"></i>
+              </a>
+              <button class="btn btn-eliminar btn-accion" data-bs-toggle="modal" data-bs-target="#deleteModal"
+                th:attr="data-id=${pastel.id}">
+                <i class="fas fa-trash-alt"></i>
+              </button>
+            </td>
+          </td>
+          <td sec:authorize="isAuthenticated()">
+            <form th:action="@{/carrito/agregar/{tipo}/{idPan}(tipo=pastel,idPan=${pastel.id})}" method="get">
+              <button type="submit" class="btn-accion btn-nuevo">
+                <i class="fas fa-cart-plus"></i> Agregar al carrito
+              </button>
+            </form>
           </td>
         </tr>
       </tbody>

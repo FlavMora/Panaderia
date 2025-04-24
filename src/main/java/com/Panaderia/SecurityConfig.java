@@ -4,41 +4,76 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.beans.factory.annotation.Autowired; // Import Autowired
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
-
-    // Bean para codificar las contraseñas usando BCrypt
+public class SecurityConfig {
     @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+    public UserDetailsService users() {
+        UserDetails admin = User.builder()
+                .username("juan")
+                .password("{noop}123")
+                .roles("USER", "VENDEDOR", "ADMIN")
+                .build();
+        UserDetails sales = User.builder()
+                .username("rebeca")
+                .password("{noop}456")
+                .roles("VENDEDOR", "USER")
+                .build();
+        UserDetails user = User.builder()
+                .username("pedro")
+                .password("{noop}789")
+                .roles("USER")
+                .build();
+        UserDetails eruiz30353 = User.builder()
+                .username("eruiz30353")
+                .password("{noop}30353")
+                .roles("USER")
+                .build();
+        return new InMemoryUserDetailsManager(user, sales, admin, eruiz30353);
     }
 
-    // Configuración de seguridad HTTP
-    
-    protected void configure(HttpSecurity http) throws Exception {
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            .authorizeRequests()
-                // Las rutas que comienzan con /admin/ solo pueden ser accedidas por usuarios con rol ADMIN
-                .antMatchers("/admin/**").hasRole("ADMIN")
-                // Las rutas que comienzan con /cliente/ solo pueden ser accedidas por usuarios con rol CLIENTE
-                .antMatchers("/cliente/**").hasRole("CLIENTE")
-                // Cualquier otra solicitud debe estar autenticada
-                .anyRequest().authenticated()
-            .and()
-            .formLogin()
-                // Configura la página de login personalizada
-                .loginPage("/login")
-                // Permite el acceso a todos a la página de login
-                .permitAll()
-            .and()
-            .logout()
-                // Permite el acceso a todos al logout
-                .permitAll();
+                .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers(
+                                "/",
+                                "/css/**",
+                                "/images/**",
+                                "/index",
+                                "/js/**",
+                                "/logout",
+                                "/pasteles/listado",
+                                "/postres/listado",
+                                "/reposterias/listado",
+                                "/resena/listado",
+                                "/webjars/**")
+                        .permitAll()
+                        .requestMatchers(
+                                "/admin/**",
+                                "/postres/**",
+                                "/reposterias/**",
+                                "/resena/**",
+                                "pasteles/**"
+                        ).hasRole("ADMIN")
+                        .requestMatchers("/carrito/**").hasRole("USER")
+                        .anyRequest().authenticated())
+                .formLogin(form -> form
+                        .loginPage("/login")
+                        .defaultSuccessUrl("/")
+                        .permitAll())
+                .logout(logout -> logout
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/login?logout")
+                        .permitAll());
+
+        return http.build();
     }
 }

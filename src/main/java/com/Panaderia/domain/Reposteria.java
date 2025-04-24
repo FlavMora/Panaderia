@@ -23,6 +23,8 @@ public class Reposteria {
 
     private BigDecimal precio;
 
+    private int existencias;
+
     // Constructores
     public Reposteria() {
     }
@@ -82,5 +84,9 @@ public class Reposteria {
 
     public void setPrecio(BigDecimal precio) {
         this.precio = precio;
+    }
+
+    public int getExistencias() {
+        return existencias;
     }
 }

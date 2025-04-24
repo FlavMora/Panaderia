@@ -101,23 +101,38 @@ use panaderia;
 
 CREATE TABLE pedido (
   id_pedido INT AUTO_INCREMENT PRIMARY KEY,
-  id_usuario INT NOT NULL,
-  fecha DATE,
-  total DECIMAL(10,2),
-  estado INT,
-  FOREIGN KEY fk_pedido_usuario (id_usuario) references usuario(id_usuario)  
+  id_usuario INT       NOT NULL,
+  fecha      DATE,
+  total      DECIMAL(10,2),
+  estado     INT
 );
 
 CREATE TABLE orden (
   id_orden INT AUTO_INCREMENT PRIMARY KEY,
-  id_pedido INT,
-  id_reposterias INT NULL,
-  id_postres INT NULL,
-  id_pasteles INT NULL,
+  id_pedido INT NOT NULL,
+  id_reposterias INT DEFAULT NULL,
+  id_postres INT DEFAULT NULL,
+  id_pasteles INT DEFAULT NULL,
   precio DECIMAL(10,2),
   cantidad INT,
-  FOREIGN KEY fk_orden_pedido (id_pedido) REFERENCES pedido(id_pedido),
-  FOREIGN KEY fk_orden_reposterias (id_reposterias) REFERENCES reposterias(id),
-  FOREIGN KEY fk_orden_postres (id_postres) REFERENCES postres(id),
-  FOREIGN KEY fk_orden_pasteles (id_pasteles) REFERENCES pasteles(id)
-);
+  CONSTRAINT fk_orden_pedido FOREIGN KEY (id_pedido) REFERENCES pedido(id_pedido),
+  CONSTRAINT fk_orden_reposterias FOREIGN KEY (id_reposterias) REFERENCES reposterias(id),
+  CONSTRAINT fk_orden_postres FOREIGN KEY (id_postres) REFERENCES postres(id),
+  CONSTRAINT fk_orden_pasteles FOREIGN KEY (id_pasteles) REFERENCES pasteles(id)
+) ENGINE=InnoDB;
+
+ALTER TABLE pasteles ADD COLUMN existencias INT NOT NULL DEFAULT 0;
+ALTER TABLE postres ADD COLUMN existencias INT NOT NULL DEFAULT 0;
+ALTER TABLE reposterias ADD COLUMN existencias INT NOT NULL DEFAULT 0;
+
+UPDATE pasteles
+SET existencias = 100
+WHERE existencias = 0;
+
+UPDATE postres
+SET existencias = 100
+WHERE existencias = 0;
+
+UPDATE reposterias
+SET existencias = 100
+WHERE existencias = 0;

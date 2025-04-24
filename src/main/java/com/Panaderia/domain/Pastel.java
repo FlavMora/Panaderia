@@ -23,6 +23,8 @@ public class Pastel {
 
     private BigDecimal precio;
 
+    private int existencias;
+
     // Constructores
     public Pastel() {
     }
@@ -82,5 +84,9 @@ public class Pastel {
 
     public void setPrecio(BigDecimal precio) {
         this.precio = precio;
+    }
+
+    public int getExistencias() {
+        return existencias;
     }
 }

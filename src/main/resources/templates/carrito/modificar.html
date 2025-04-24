@@ -1,15 +1,87 @@
 <!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
--->
-<html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://thymeleaf.org/extras/spring-security">
+    <head th:replace="~{layout/plantilla :: head}">
+        <title>Modificar Cantidad</title>
     </head>
     <body>
-        <div>TODO write content</div>
+        <header>
+            <nav th:replace="~{layout/plantilla :: navbar}"></nav>
+        </header>
+        
+        <main class="container py-5">
+            <div class="row justify-content-center">
+                <div class="col-11 col-xl-10">
+                    <div class="card card-modificar">
+                        <div class="card-header card-header-modificar text-white">
+                            <h3 class="mb-0 text-center">Modificar Cantidad</h3>
+                        </div>
+                        
+                        <div class="contenido-formulario">
+                            <form th:action="@{/carrito/modificar}" method="post">
+                                <input type="hidden" name="tipo" th:value="${item.tipo}">
+                                <input type="hidden" name="idPan" th:value="${item.idPan}">
+                                
+                                <div class="mb-4">
+                                    <label class="form-label">Producto:</label>
+                                    <p class="form-control-static fw-bold" th:text="${item.nombre}"></p>
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <label class="form-label">Descripción:</label>
+                                    <p class="form-control-static" th:text="${item.descripcion}"></p>
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <label class="form-label">Precio unitario:</label>
+                                    <p class="form-control-static" th:text="'₡ ' + ${#numbers.formatDecimal(item.precio, 1, 'COMMA', 2, 'POINT')}"></p>
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <label class="form-label">Disponibles:</label>
+                                    <p class="form-control-static" th:text="${item.existencias} + ' unidades'"></p>
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <label for="cantidad" class="form-label">Cantidad a llevar</label>
+                                    <input type="number" 
+                                           class="form-control input-cantidad" 
+                                           id="cantidad" 
+                                           name="cantidad"
+                                           th:value="${item.cantidad}"
+                                           min="1" 
+                                           th:attr="max=${item.existencias}"
+                                           required
+                                           autofocus>
+                                    <div class="form-text mt-2">
+                                        Máximo disponible: <span class="fw-semibold" th:text="${item.existencias}"></span>
+                                    </div>
+                                    <div th:if="${errorCantidad}" 
+                                         class="alert alert-danger mt-3 p-2" 
+                                         th:text="${errorCantidad}">
+                                    </div>
+                                </div>
+                                
+                                <div class="botones-accion">
+                                    <a th:href="@{/carrito/listado}" 
+                                       class="btn btn-cancelar">
+                                        <i class="fas fa-times"></i>
+                                        Cancelar
+                                    </a>
+                                    <button type="submit" 
+                                            class="btn btn-primary btn-guardar">
+                                        <i class="fas fa-save"></i>
+                                        Guardar
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer th:replace="~{layout/plantilla :: footer}"/>
     </body>
 </html>

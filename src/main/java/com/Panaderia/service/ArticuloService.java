@@ -1,11 +1,9 @@
 
 package com.Panaderia.service;
 import com.Panaderia.domain.Articulo;
-import java.util.ArrayList;
 import java.util.List;
 
 public interface ArticuloService {
-   List<Articulo> listaArticulos = new ArrayList<>();
     
     public List<Articulo> gets();
     
